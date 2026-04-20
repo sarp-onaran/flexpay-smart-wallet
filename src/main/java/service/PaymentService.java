@@ -15,15 +15,15 @@ public class PaymentService {
     }
 
     /**
-     * Ödeme motorunun ana metodu.
-     * Seçilen stratejiye göre ödemeyi işler.
+     * Main method of the payment engine.
+     * Processes the payment according to the selected strategy.
      */
     public boolean executePayment(double amount, Wallet wallet) {
         if (strategy == null) {
-            System.err.println("Ödeme stratejisi belirlenmedi!");
+            System.err.println("Payment strategy not set!");
             return false;
         }
-        System.out.println("Ödeme işleniyor: " + amount + " TL");
+        System.out.println("Processing payment: " + amount + " TL");
         return strategy.processPayment(amount, wallet);
     }
 }

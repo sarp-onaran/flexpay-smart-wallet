@@ -5,20 +5,20 @@ import repository.DatabaseManager;
 public class Main {
     public static void main(String[] args) {
         System.out.println("=== Chippin Smart Wallet Engine ===");
-        System.out.println("Proje başarıyla oluşturuldu!\n");
+        System.out.println("Project initialized successfully!\n");
 
-        // Örnek cüzdan oluştur
+        // Create a sample wallet
         Wallet wallet = new Wallet(5000.0, 1500.0, 200.0);
-        System.out.println("Cüzdan bilgileri: " + wallet);
+        System.out.println("Wallet details: " + wallet);
 
-        // Veritabanı bağlantısını başlat
+        // Initialize database connection
         DatabaseManager db = DatabaseManager.getInstance();
 
-        // TODO: Strateji implementasyonları eklenecek
+        // TODO: Strategy implementations will be added
         // PaymentService service = new PaymentService(new MarketStrategy());
         // service.executePayment(150.0, wallet);
 
-        // Bağlantıyı kapat
+        // Close the connection
         db.closeConnection();
     }
 }
