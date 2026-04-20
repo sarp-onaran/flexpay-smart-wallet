@@ -1,0 +1,25 @@
+# Compiled class files
+target/
+
+# IDE files
+.idea/
+*.iml
+.vscode/
+.project
+.classpath
+.settings/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# SQLite database files
+*.db
+
+# Maven wrapper (optional, can be included)
+# .mvn/
+
+# Build output
+*.class
+*.jar
+*.war
