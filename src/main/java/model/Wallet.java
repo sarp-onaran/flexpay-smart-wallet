@@ -2,18 +2,18 @@ package model;
 
 public class Wallet {
     private double creditCardLimit;
-    private double foodBalance; // Şirketin yatırdığı yemek parası
-    private double chipPoints;     // Harcadıkça kazanılan puanlar
-    private boolean isMicroSavingEnabled; // Küsurat yuvarlama açık mı?
+    private double foodBalance; // Corporate meal allowance
+    private double chipPoints;     // Loyalty points earned from spending
+    private boolean isMicroSavingEnabled; // Is round-up saving enabled?
 
     public Wallet(double creditCardLimit, double foodBalance, double chipPoints) {
         this.creditCardLimit = creditCardLimit;
         this.foodBalance = foodBalance;
         this.chipPoints = chipPoints;
-        this.isMicroSavingEnabled = true; // Varsayılan olarak açık
+        this.isMicroSavingEnabled = true; // Enabled by default
     }
 
-    // Getter ve Setter metotları
+    // Getter and Setter methods
     public double getCreditCardLimit() {
         return creditCardLimit;
     }
@@ -46,7 +46,7 @@ public class Wallet {
         isMicroSavingEnabled = microSavingEnabled;
     }
 
-    // Ödeme yapıldıkça bu bakiyeler güncellenecek
+    // These balances are updated as payments are processed
 
     @Override
     public String toString() {

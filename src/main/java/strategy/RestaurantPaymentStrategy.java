@@ -6,38 +6,38 @@ public class RestaurantPaymentStrategy implements PaymentStrategy {
 
     @Override
     public boolean processPayment(double amount, Wallet wallet) {
-        System.out.println("🍽️ Restoran Ödemesi Başlatıldı: " + amount + " TL");
+        System.out.println("🍽️ Restaurant Payment Initiated: " + amount + " TL");
         double remainingAmount = amount;
 
-        // 1. Adım: Önce şirketin verdiği yemek bakiyesini kullan
+        // Step 1: Use the corporate meal balance first
         if (wallet.getFoodBalance() > 0) {
             double amountToDeduct = Math.min(wallet.getFoodBalance(), remainingAmount);
             wallet.setFoodBalance(wallet.getFoodBalance() - amountToDeduct);
             remainingAmount -= amountToDeduct;
-            System.out.println("   -> Yemek Bakiyesinden Çekilen: " + amountToDeduct + " TL");
+            System.out.println("   -> Deducted from Meal Balance: " + amountToDeduct + " TL");
         }
 
-        // 2. Adım: Hesap kapanmadıysa ChipPuanları kullan
+        // Step 2: If the bill is not settled, use ChipPoints
         if (remainingAmount > 0 && wallet.getChipPoints() > 0) {
             double amountToDeduct = Math.min(wallet.getChipPoints(), remainingAmount);
             wallet.setChipPoints(wallet.getChipPoints() - amountToDeduct);
             remainingAmount -= amountToDeduct;
-            System.out.println("   -> ChipPuan'dan Çekilen: " + amountToDeduct + " TL");
+            System.out.println("   -> Deducted from ChipPoints: " + amountToDeduct + " TL");
         }
 
-        // 3. Adım: Hala borç varsa Kredi Kartından çek
+        // Step 3: If there is still a remaining balance, charge the credit card
         if (remainingAmount > 0) {
             if (wallet.getCreditCardLimit() >= remainingAmount) {
                 wallet.setCreditCardLimit(wallet.getCreditCardLimit() - remainingAmount);
-                System.out.println("   -> Kredi Kartından Çekilen: " + remainingAmount + " TL");
+                System.out.println("   -> Charged to Credit Card: " + remainingAmount + " TL");
                 remainingAmount = 0;
             } else {
-                System.out.println("❌ Yetersiz Bakiye! Kredi kartı limiti işlemi karşılamıyor.");
+                System.out.println("❌ Insufficient Balance! Credit card limit cannot cover the transaction.");
                 return false;
             }
         }
 
-        System.out.println("✅ Restoran ödemesi başarıyla tamamlandı!\n");
+        System.out.println("✅ Restaurant payment completed successfully!\n");
         return true;
     }
 }

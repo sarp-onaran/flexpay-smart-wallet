@@ -8,19 +8,18 @@ public class MicroSavingProcessor {
         if (!wallet.isMicroSavingEnabled())
             return;
 
-        // Örn: Harcama 184.0 TL. Bir üst 10'luğa veya 100'lüğe yuvarlayalım (Burada en
-        // yakın onluğa yuvarlıyoruz)
+        // E.g.: Spending is 184.0 TL. Round up to the nearest ten.
         double roundedAmount = Math.ceil(originalAmount / 10.0) * 10.0;
         double roundUpDifference = roundedAmount - originalAmount;
 
         if (roundUpDifference > 0) {
-            // Kullanıcının kartından küsuratı çek ve puana çevir
+            // Deduct the round-up difference from the card and convert to loyalty points
             if (wallet.getCreditCardLimit() >= roundUpDifference) {
                 wallet.setCreditCardLimit(wallet.getCreditCardLimit() - roundUpDifference);
                 wallet.setChipPoints(wallet.getChipPoints() + roundUpDifference);
-                System.out.println("🐷 [Kumbaraya Atıldı] " + originalAmount + " TL harcamanız "
-                        + roundedAmount + " TL'ye yuvarlandı. "
-                        + roundUpDifference + " TL ChipPuan olarak cüzdanınıza eklendi!");
+                System.out.println("🐷 [Piggy Bank] Your " + originalAmount + " TL purchase was rounded up to "
+                        + roundedAmount + " TL. "
+                        + roundUpDifference + " TL added to your wallet as ChipPoints!");
             }
         }
     }

@@ -14,9 +14,9 @@ public class DatabaseManager {
         try {
             connection = DriverManager.getConnection(DB_URL);
             initializeTables();
-            System.out.println("SQLite veritabanı bağlantısı başarılı.");
+            System.out.println("SQLite database connection established successfully.");
         } catch (SQLException e) {
-            System.err.println("Veritabanı bağlantı hatası: " + e.getMessage());
+            System.err.println("Database connection error: " + e.getMessage());
         }
     }
 
@@ -34,7 +34,7 @@ public class DatabaseManager {
     private void initializeTables() throws SQLException {
         Statement stmt = connection.createStatement();
 
-        // Wallet tablosu
+        // Wallet table
         stmt.execute("CREATE TABLE IF NOT EXISTS wallets (" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "owner_name TEXT NOT NULL, " +
@@ -44,7 +44,7 @@ public class DatabaseManager {
                 "is_micro_saving_enabled INTEGER DEFAULT 1" +
                 ")");
 
-        // İşlem geçmişi tablosu
+        // Transaction history table
         stmt.execute("CREATE TABLE IF NOT EXISTS transactions (" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "wallet_id INTEGER, " +
@@ -61,10 +61,10 @@ public class DatabaseManager {
         try {
             if (connection != null && !connection.isClosed()) {
                 connection.close();
-                System.out.println("Veritabanı bağlantısı kapatıldı.");
+                System.out.println("Database connection closed.");
             }
         } catch (SQLException e) {
-            System.err.println("Bağlantı kapatma hatası: " + e.getMessage());
+            System.err.println("Error closing connection: " + e.getMessage());
         }
     }
 }

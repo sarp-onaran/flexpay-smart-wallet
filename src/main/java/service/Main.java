@@ -8,7 +8,7 @@ import strategy.RetailPaymentStrategy;
 public class Main {
     public static void main(String[] args) {
 
-        // 1. Simülasyon Başlangıcı
+        // 1. Simulation Start
         Wallet myWallet = new Wallet(5000.0, 400.0, 50.0);
 
         System.out.println("==================================================");
@@ -17,9 +17,9 @@ public class Main {
         printWalletStatus(myWallet);
 
         // ---------------------------------------------------------
-        // SENARYO 1: Restoranda Otomatik Parçalı Ödeme
+        // SCENARIO 1: Automatic Split Payment at a Restaurant
         // ---------------------------------------------------------
-        System.out.println("\n📍 LOKASYON: Midpoint Restoran");
+        System.out.println("\n📍 LOCATION: Midpoint Restaurant");
         double billAmount = 584.0;
 
         PaymentStrategy restaurantStrategy = new RestaurantPaymentStrategy();
@@ -32,9 +32,9 @@ public class Main {
         printWalletStatus(myWallet);
 
         // ---------------------------------------------------------
-        // SENARYO 2: Giyim Mağazasında Ödeme
+        // SCENARIO 2: Payment at a Retail Store
         // ---------------------------------------------------------
-        System.out.println("\n📍 LOKASYON: LC Waikiki Mağazası");
+        System.out.println("\n📍 LOCATION: LC Waikiki Store");
         double retailAmount = 200.0;
 
         PaymentStrategy retailStrategy = new RetailPaymentStrategy();
@@ -44,15 +44,15 @@ public class Main {
         }
         printWalletStatus(myWallet);
 
-        System.out.println("\n✅ FLEXPAY SİMÜLASYONU BAŞARIYLA TAMAMLANDI.");
+        System.out.println("\n✅ FLEXPAY SIMULATION COMPLETED SUCCESSFULLY.");
     }
 
     private static void printWalletStatus(Wallet wallet) {
         System.out.println("--------------------------------------------------");
-        System.out.println("💳 [CÜZDAN DURUMU]");
-        System.out.println("   Kredi Kartı Limiti : " + wallet.getCreditCardLimit() + " TL");
-        System.out.println("   Kurumsal Yemek Fonu: " + wallet.getFoodBalance() + " TL");
-        System.out.println("   Sadakat Puanı      : " + wallet.getChipPoints() + " Puan");
+        System.out.println("💳 [WALLET STATUS]");
+        System.out.println("   Credit Card Limit  : " + wallet.getCreditCardLimit() + " TL");
+        System.out.println("   Corporate Meal Fund : " + wallet.getFoodBalance() + " TL");
+        System.out.println("   Loyalty Points      : " + wallet.getChipPoints() + " Points");
         System.out.println("--------------------------------------------------");
     }
 }
