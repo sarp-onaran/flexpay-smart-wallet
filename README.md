@@ -11,7 +11,7 @@
 
 ## 🧠 What Does It Do?
 
-FlexPay simulates a **smart digital wallet** that automatically splits payments across multiple funding sources — just like modern fintech apps (Chippin, Sodexo, Param, etc.).
+FlexPay simulates a **smart digital wallet** that automatically splits payments across multiple funding sources — inspired by modern fintech apps like Multinet, SetCard, Sodexo, Ticket, and Chippin.
 
 ### Key Features
 
@@ -50,23 +50,23 @@ src/main/java/
 ### Design Pattern: Strategy
 
 ```
-┌─────────────────────┐
-│   PaymentService    │  (Context)
-│   ┌───────────────┐ │
-│   │  «interface»  │ │
-│   │ PaymentStrategy│ │
-│   └───────┬───────┘ │
-└───────────┼─────────┘
-            │
-    ┌───────┴────────┐
-    │                │
-┌───▼────┐    ┌──────▼───────┐
-│Restaurant│   │   Retail     │
-│Strategy  │   │  Strategy    │
-│          │   │              │
-│meal→pts  │   │pts→card     │
-│→card     │   │(no meal)     │
-└──────────┘   └──────────────┘
+┌──────────────────────────────────┐
+│         PaymentService           │  (Context)
+│   ┌──────────────────────────┐   │
+│   │       «interface»        │   │
+│   │     PaymentStrategy      │   │
+│   └─────────────┬────────────┘   │
+└─────────────────┼────────────────┘
+                  │
+        ┌─────────┴─────────┐
+        │                   │
+┌───────▼────────┐  ┌───────▼────────┐
+│   Restaurant   │  │    Retail      │
+│   Strategy     │  │   Strategy     │
+│                │  │                │
+│ meal → pts     │  │ pts → card     │
+│ → card         │  │ (no meal)      │
+└────────────────┘  └────────────────┘
 ```
 
 ---
