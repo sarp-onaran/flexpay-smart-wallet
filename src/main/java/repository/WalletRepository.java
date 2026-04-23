@@ -6,15 +6,33 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Repository class for performing CRUD operations on the {@code wallets} table.
+ * <p>
+ * Provides methods to insert, find, update, and seed wallets in the SQLite database.
+ * Uses {@link PreparedStatement} for all queries to prevent SQL injection.
+ *
+ * @author Sarp Onaran
+ * @version 1.0
+ */
 public class WalletRepository {
     private final Connection connection;
 
+    /**
+     * Constructs a WalletRepository with the given database connection.
+     *
+     * @param connection the active SQLite connection
+     */
     public WalletRepository(Connection connection) {
         this.connection = connection;
     }
 
     /**
-     * Inserts a new wallet into the database and returns the generated ID.
+     * Inserts a new wallet into the database and assigns the generated ID.
+     *
+     * @param wallet the wallet to insert
+     * @return the generated database ID for the inserted wallet
+     * @throws SQLException if a database access error occurs
      */
     public int insert(Wallet wallet) throws SQLException {
         String sql = "INSERT INTO wallets (owner_name, credit_card_limit, food_balance, chip_points, is_micro_saving_enabled) " +
@@ -41,7 +59,11 @@ public class WalletRepository {
     }
 
     /**
-     * Finds a wallet by its ID. Returns null if not found.
+     * Finds a wallet by its database ID.
+     *
+     * @param id the wallet ID to search for
+     * @return the found {@link Wallet}, or {@code null} if no wallet exists with the given ID
+     * @throws SQLException if a database access error occurs
      */
     public Wallet findById(int id) throws SQLException {
         String sql = "SELECT * FROM wallets WHERE id = ?";
@@ -62,6 +84,9 @@ public class WalletRepository {
 
     /**
      * Returns all wallets stored in the database.
+     *
+     * @return a list of all wallets; empty list if none exist
+     * @throws SQLException if a database access error occurs
      */
     public List<Wallet> findAll() throws SQLException {
         String sql = "SELECT * FROM wallets";
@@ -80,6 +105,10 @@ public class WalletRepository {
 
     /**
      * Updates the wallet balances in the database after a transaction.
+     * Only updates financial fields and the micro-saving flag.
+     *
+     * @param wallet the wallet with updated balances to persist
+     * @throws SQLException if a database access error occurs
      */
     public void update(Wallet wallet) throws SQLException {
         String sql = "UPDATE wallets SET credit_card_limit = ?, food_balance = ?, chip_points = ?, " +
@@ -97,7 +126,10 @@ public class WalletRepository {
 
     /**
      * Seeds the database with a default wallet if the table is empty.
-     * Returns the existing or newly created wallet.
+     * If wallets already exist, returns the first one found.
+     *
+     * @return the existing or newly created default wallet
+     * @throws SQLException if a database access error occurs
      */
     public Wallet seedDefaultWallet() throws SQLException {
         List<Wallet> existing = findAll();
@@ -112,7 +144,11 @@ public class WalletRepository {
     }
 
     /**
-     * Maps a ResultSet row to a Wallet object.
+     * Maps a database ResultSet row to a Wallet domain object.
+     *
+     * @param rs the ResultSet positioned at the current row
+     * @return a new Wallet populated with database values
+     * @throws SQLException if a column cannot be read
      */
     private Wallet mapResultSetToWallet(ResultSet rs) throws SQLException {
         return new Wallet(

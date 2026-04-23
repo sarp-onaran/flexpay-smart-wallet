@@ -5,11 +5,25 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+/**
+ * Manages the SQLite database connection using the <b>Singleton Pattern</b>.
+ * <p>
+ * Ensures only one database connection exists throughout the application lifecycle.
+ * On first initialization, it automatically creates the required tables
+ * ({@code wallets} and {@code transactions}) if they do not already exist.
+ *
+ * @author Sarp Onaran
+ * @version 1.1
+ */
 public class DatabaseManager {
     private static final String DB_URL = "jdbc:sqlite:chippin_wallet.db";
     private static DatabaseManager instance;
     private Connection connection;
 
+    /**
+     * Private constructor — initializes the SQLite connection and creates tables.
+     * Called only once via {@link #getInstance()}.
+     */
     private DatabaseManager() {
         try {
             connection = DriverManager.getConnection(DB_URL);
@@ -20,6 +34,12 @@ public class DatabaseManager {
         }
     }
 
+    /**
+     * Returns the singleton instance of DatabaseManager.
+     * Creates the instance on first call (lazy initialization).
+     *
+     * @return the single DatabaseManager instance
+     */
     public static DatabaseManager getInstance() {
         if (instance == null) {
             instance = new DatabaseManager();
@@ -27,10 +47,20 @@ public class DatabaseManager {
         return instance;
     }
 
+    /**
+     * Returns the active database connection.
+     *
+     * @return the SQLite {@link Connection} object
+     */
     public Connection getConnection() {
         return connection;
     }
 
+    /**
+     * Creates the wallets and transactions tables if they do not exist.
+     *
+     * @throws SQLException if a database access error occurs
+     */
     private void initializeTables() throws SQLException {
         Statement stmt = connection.createStatement();
 
@@ -57,6 +87,10 @@ public class DatabaseManager {
         stmt.close();
     }
 
+    /**
+     * Closes the database connection gracefully.
+     * Safe to call multiple times — checks if the connection is already closed.
+     */
     public void closeConnection() {
         try {
             if (connection != null && !connection.isClosed()) {

@@ -2,9 +2,23 @@ package repository;
 
 import java.sql.*;
 
+/**
+ * Repository class for logging and querying payment transactions.
+ * <p>
+ * Every successful payment is recorded in the {@code transactions} table
+ * with a timestamp, category, and amount for audit and analytics purposes.
+ *
+ * @author Sarp Onaran
+ * @version 1.0
+ */
 public class TransactionRepository {
     private final Connection connection;
 
+    /**
+     * Constructs a TransactionRepository with the given database connection.
+     *
+     * @param connection the active SQLite connection
+     */
     public TransactionRepository(Connection connection) {
         this.connection = connection;
     }
@@ -12,9 +26,10 @@ public class TransactionRepository {
     /**
      * Logs a payment transaction to the database.
      *
-     * @param walletId ID of the wallet that made the payment
-     * @param category Payment category (e.g., "RESTAURANT", "RETAIL")
-     * @param amount   Transaction amount
+     * @param walletId the ID of the wallet that made the payment
+     * @param category the payment category (e.g., "RESTAURANT", "RETAIL")
+     * @param amount   the transaction amount in TL
+     * @throws SQLException if a database access error occurs
      */
     public void logTransaction(int walletId, String category, double amount) throws SQLException {
         String sql = "INSERT INTO transactions (wallet_id, category, amount) VALUES (?, ?, ?)";
@@ -30,7 +45,11 @@ public class TransactionRepository {
     }
 
     /**
-     * Prints all transactions for a given wallet.
+     * Prints the complete transaction history for a given wallet to the console.
+     * Transactions are displayed in reverse chronological order.
+     *
+     * @param walletId the ID of the wallet to query
+     * @throws SQLException if a database access error occurs
      */
     public void printTransactionHistory(int walletId) throws SQLException {
         String sql = "SELECT * FROM transactions WHERE wallet_id = ? ORDER BY timestamp DESC";
