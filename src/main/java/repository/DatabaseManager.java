@@ -16,7 +16,7 @@ import java.sql.Statement;
  * @version 1.1
  */
 public class DatabaseManager {
-    private static final String DB_URL = "jdbc:sqlite:chippin_wallet.db";
+    private static final String DB_URL = "jdbc:sqlite:flexpay_wallet.db";
     private static DatabaseManager instance;
     private Connection connection;
 

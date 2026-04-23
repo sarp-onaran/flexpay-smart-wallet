@@ -4,12 +4,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.chippin</groupId>
+    <groupId>com.flexpay</groupId>
     <artifactId>smart-wallet-engine</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>Chippin Smart Wallet Engine</name>
+    <name>FlexPay Smart Wallet Engine</name>
     <description>Smart Wallet Engine with strategy-based payment processing</description>
 
     <properties>
